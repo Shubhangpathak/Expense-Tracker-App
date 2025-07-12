@@ -1,7 +1,5 @@
 ## Expense Tracker with Authentication
 
-<hr>
-
 Hey there! This is my little project to build a super Simple Expense Tracker. The goal is to help me (and maybe you!) keep tabs on where all the money goes. It's still a work in progress, but here's what's cooking!
 
 - User authentication (Firebase or Express+JWT)
