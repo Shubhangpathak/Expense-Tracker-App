@@ -1,5 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 * {
-  font-family: "Instrument Sans", sans-serif;
+  font-family: "Inter", sans-serif;
+}
+:root {
+  --clr-sapphire: #082efd;
+  --clr-emerald: #3dff2b;
+}
+.clr-sapphire {
+  background-color: var(--clr-sapphire);
+}
+.clr-emerald {
+  background-color: var(--clr-emerald);
 }
