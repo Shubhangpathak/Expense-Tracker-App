@@ -9,4 +9,4 @@ Hey there! This is my little project to build a super Simple Expense Tracker. Th
 - At last: Graphs for expense categories
 
 **Designed myself this is how it could look in future**
-check out website here: [https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/Untitled?node-id=1-2&t=rz3o9R6pgLM5d015-1](#)
+check out website here: [https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/shubhang?node-id=0-1&t=rCbRT7x3STi2QFOR-1](#)
