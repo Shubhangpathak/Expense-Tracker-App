@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 
-const ManageAccounts = () => {
+const ManageAccounts = ({ balance, setBalance }) => {
   const [username, setUsername] = useState("shubhang");
   const [isModelOpen, setModelOpen] = useState(false);
-  const [balance, setBalance] = useState(20000);
+  // const [balance, setBalance] = useState(20000);
+
+  function updateBalance() {
+    const inputValue = document.getElementById("amountInput").value;
+    setBalance((prevBalance) => prevBalance + Number(inputValue));
+    setModelOpen(false);
+  }
 
   return (
     <>
-      <div className="px-5 pt-8 flex text-xl w-full">
+      <div className="px-5 py-8 flex text-xl w-full">
         <h1 class="text-4xl w-2/5 items-center p-5">
           Welcome to <br /> safefund, {username}!
         </h1>
@@ -53,7 +59,7 @@ const ManageAccounts = () => {
               className="bg-blue-500 px-4 py-2 text-white"
               onClick={() => {
                 const inputValue = document.getElementById("amountInput").value;
-                setBalance(balance + Number(inputValue));
+                setBalance((prevBalance) => prevBalance + Number(inputValue));
                 setModelOpen(false);
               }}
             >
