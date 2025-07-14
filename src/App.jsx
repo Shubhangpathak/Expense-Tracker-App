@@ -6,13 +6,13 @@ import ExpenseHistory from "./components/ExpenseHistory";
 
 const App = () => {
   const [balance, setBalance] = useState(20000);
-  const [expense, setExpense] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   return (
     <>
       <ManageAccounts balance={balance} setBalance={setBalance} />
       <div className="flex justify-center gap-5">
-        <AddExpense setBalance={setBalance} />
-        <ExpenseHistory />
+        <AddExpense setBalance={setBalance} setExpenses={setExpenses} />
+        <ExpenseHistory expenses={expenses} />
       </div>
     </>
   );

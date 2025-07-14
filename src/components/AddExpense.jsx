@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 
-const AddExpense = ({ setBalance }) => {
+const AddExpense = ({ setBalance, setExpenses }) => {
   const [expenseAmount, setExpenseAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("None");
   const [expenseDate, setExpenseDate] = useState("");
 
   const handleAddExpense = () => {
-    const expense = Number(document.getElementById("expense").value);
-    setBalance((prevBalance) => prevBalance - expense);
-
+    setBalance((prevBalance) => prevBalance - Number(expenseAmount));
+    setExpenses((prevExpenses) => [
+      ...prevExpenses,
+      {
+        date: expenseDate,
+        category: selectedCategory,
+        amount: Number(expenseAmount),
+      },
+    ]);
     setExpenseAmount("");
     setSelectedCategory("None");
     setExpenseDate("");
