@@ -10,9 +10,10 @@ const AddExpense = ({ setBalance, setExpenses }) => {
     setExpenses((prevExpenses) => [
       ...prevExpenses,
       {
+        type: "expense",
         date: expenseDate,
         category: selectedCategory,
-        amount: Number(expenseAmount),
+        amount: -Number(expenseAmount),
       },
     ]);
     setExpenseAmount("");
@@ -37,7 +38,7 @@ const AddExpense = ({ setBalance, setExpenses }) => {
 
   return (
     <>
-      <div className="flex flex-col w-100 p-5 border gap-5">
+      <div className="flex flex-col w-full p-5  gap-5">
         <h3>AddExpense</h3>
         <span className="flex flex-col">
           <span>Amount</span>
@@ -80,7 +81,10 @@ const AddExpense = ({ setBalance, setExpenses }) => {
           <button className="border px-4 py-2">
             <img src="/reset1.svg" alt="resets-value" className="h-7" />
           </button>
-          <button className="border px-8 py-2" onClick={handleAddExpense}>
+          <button
+            className="clr-emerald border px-8 py-2"
+            onClick={handleAddExpense}
+          >
             Add Expense
           </button>
         </div>

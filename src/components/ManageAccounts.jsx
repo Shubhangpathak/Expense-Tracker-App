@@ -1,13 +1,32 @@
+import { CategoryScale } from "chart.js";
 import React, { useState } from "react";
 
-const ManageAccounts = ({ balance, setBalance }) => {
+const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
   const [username, setUsername] = useState("shubhang");
   const [isModelOpen, setModelOpen] = useState(false);
   // const [balance, setBalance] = useState(20000);
+  const [balanceDate, setBalanceDate] = useState();
+  const [balanceInput, setBalanceInput] = useState();
+  const [balanceAmount, setBalanceAmount] = useState();
 
   function updateBalance() {
     const inputValue = document.getElementById("amountInput").value;
     setBalance((prevBalance) => prevBalance + Number(inputValue));
+
+    setExpenses((prevExpenses) => [
+      ...prevExpenses,
+      {
+        type: "addedBalance",
+        date: balanceDate,
+        category: balanceInput,
+        amount: Number(balanceAmount),
+      },
+    ]);
+
+    setBalanceDate("");
+    setBalanceInput("");
+    setBalanceAmount("");
+
     setModelOpen(false);
   }
 
@@ -15,7 +34,7 @@ const ManageAccounts = ({ balance, setBalance }) => {
     <>
       <div className="px-5 py-8 flex text-xl w-full">
         <h1 class="text-4xl w-2/5 items-center p-5">
-          Welcome to <br /> safefund, {username}!
+          Welcome to <br /> safefund, {username}!!
         </h1>
         <div className="border p-5 w-4/5">
           <div className="flex w-full">
@@ -39,7 +58,7 @@ const ManageAccounts = ({ balance, setBalance }) => {
         </div>
       </div>
       {isModelOpen && (
-        <div className="border max-w-xs items-center">
+        <div className="border max-w-xs flex flex-col ">
           <div className="flex justify-between items-center ">
             <h3>Add Balance</h3>
             <img
@@ -49,23 +68,37 @@ const ManageAccounts = ({ balance, setBalance }) => {
               className="h-8"
             />
           </div>
-          <div className="flex">
-            <input
-              className="border px-4 py-2 mx-1 "
-              type="number"
-              id="amountInput"
-            />
-            <button
-              className="bg-blue-500 px-4 py-2 text-white"
-              onClick={() => {
-                const inputValue = document.getElementById("amountInput").value;
-                setBalance((prevBalance) => prevBalance + Number(inputValue));
-                setModelOpen(false);
-              }}
-            >
-              Add
-            </button>
-          </div>
+          <input
+            className="border px-4 py-2 mx-3 "
+            type="number"
+            id="amountInput"
+            placeholder="amount"
+            value={balanceAmount}
+            onChange={(e) => setBalanceAmount(e.target.value)}
+          />
+
+          <span>Input name</span>
+          <input
+            type="text"
+            className="border px-4 py-2 mx-3"
+            placeholder="Ex: bonus"
+            value={balanceInput}
+            onChange={(e) => setBalanceInput(e.target.value)}
+          />
+          <span>Date</span>
+          <input
+            type="date"
+            className="border px-4 py-2 mx-3"
+            value={balanceDate}
+            onChange={(e) => setBalanceDate(e.target.value)}
+          />
+          <button
+            className="clr-sapphire px-4 py-2 text-white mx-3 my-2"
+            onClick={updateBalance}
+          >
+            Add
+          </button>
+          <span className="text-red-500">**no logs for balance yet** </span>
         </div>
       )}
     </>
