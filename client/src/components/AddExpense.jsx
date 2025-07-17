@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddExpense = ({ setBalance, setExpenses }) => {
   const [expenseAmount, setExpenseAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("None");
-  const [expenseDate, setExpenseDate] = useState("");
+  const [expenseDate, setExpenseDate] = useState("01/08/2025");
 
   const handleAddExpense = () => {
     setBalance((prevBalance) => prevBalance - Number(expenseAmount));
@@ -18,7 +20,12 @@ const AddExpense = ({ setBalance, setExpenses }) => {
     ]);
     setExpenseAmount("");
     setSelectedCategory("None");
-    setExpenseDate("");
+    setExpenseDate("01/08/2025");
+  };
+  const handleReset = () => {
+    setExpenseAmount("");
+    setSelectedCategory("None");
+    setExpenseDate("01/08/2025");
   };
 
   const categories = [
@@ -50,39 +57,47 @@ const AddExpense = ({ setBalance, setExpenses }) => {
             onChange={(e) => setExpenseAmount(e.target.value)}
           />
         </span>
-        <span className="flex flex-col">
-          <span className="text-gray-400">Category</span>
-          <select
-            className="border px-6 py-3 remove-arrow rounded-3xl w-full appearance-none "
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option key="None" value="None">
-              Select Category
-            </option>
-            {categories.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
+        <div className="relative">
+          <span className="flex flex-col">
+            <span className="text-gray-400">Category</span>
+            <select
+              className="border px-6 py-3 remove-arrow rounded-3xl w-full appearance-none "
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option key="None" value="None">
+                Select Category
               </option>
-            ))}
-          </select>
-        </span>
+              {categories.map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </span>
+        </div>
         <span className="flex flex-col">
           <span className="text-gray-400">Date</span>
-          <input
-            type="date"
+          <DatePicker
+            selected={expenseDate}
+            onChange={(date) => setExpenseDate(date)}
             className="border px-6 py-3 remove-arrow rounded-3xl w-full"
-            value={expenseDate}
-            onChange={(e) => setExpenseDate(e.target.value)}
+            showYearDropdown
+            // dateFormatCalendar="MMMM"
+            // yearDropdownItemNumber={15}
+            scrollableYearDropdown
           />
         </span>
 
         <div className="flex gap-5">
-          <button className="border px-6 py-3 remove-arrow rounded-3xl clr-ruby">
-            <img src="/reset1.svg" alt="resets-value" className="h-7" />
+          <button
+            className=" px-6 border  py-3 remove-arrow rounded-3xl clr-ruby"
+            onClick={handleReset}
+          >
+            Reset
           </button>
           <button
-            className="clr-emerald border px-8 py-4 rounded-3xl"
+            className="clr-emerald  px-8 py-4 rounded-3xl"
             onClick={handleAddExpense}
           >
             Add Expense

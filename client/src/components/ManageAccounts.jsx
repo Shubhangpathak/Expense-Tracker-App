@@ -43,7 +43,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
             </div>
           </div>
           <div className="flex gap-6">
-            <button className="border px-6 py-3 clr-sapphire text-white rounded-3xl border-white">
+            <button className=" px-6 py-3 clr-sapphire text-white rounded-3xl border-white">
               Opening Balance : {balance}
             </button>
             <button
@@ -68,7 +68,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
             />
           </div>
           <input
-            className="border px-4 py-2 mx-3 "
+            className="border px-4 py-2 mx-3 rounded-3xl"
             type="number"
             id="amountInput"
             placeholder="amount"
@@ -79,7 +79,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
           <span>Input name</span>
           <input
             type="text"
-            className="border px-4 py-2 mx-3"
+            className="border rounded-3xl px-4 py-2 mx-3"
             placeholder="Ex: bonus"
             value={balanceInput}
             onChange={(e) => setBalanceInput(e.target.value)}
@@ -87,17 +87,16 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
           <span>Date</span>
           <input
             type="date"
-            className="border px-4 py-2 mx-3"
+            className="border px-4 py-2 mx-3 rounded-3xl"
             value={balanceDate}
             onChange={(e) => setBalanceDate(e.target.value)}
           />
           <button
-            className="clr-sapphire px-4 py-2 text-white mx-3 my-2"
+            className="clr-sapphire px-4 py-2 text-white mx-3 my-2 rounded-3xl"
             onClick={updateBalance}
           >
             Add
           </button>
-          <span className="text-red-500">**no logs for balance yet** </span>
         </div>
       )}
     </>

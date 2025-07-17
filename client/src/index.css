@@ -3,8 +3,12 @@
 * {
   font-family: "Inter", sans-serif;
   font-size: calc(2 / 1.5);
+  background-color: #070a13;
+  color: #808080;
 }
 :root {
+  /* --clr-sapphire: #000;
+  --clr-emerald: #000; */
   --clr-sapphire: #4a62ee;
   --clr-emerald: #43e56e;
 }
@@ -17,9 +21,10 @@
   color: #fff;
 }
 .clr-ruby {
-  background-color: #eb4444;
+  /* background-color: #eb4444; */
   color: #fff;
   fill: #fff;
+  border-color: #808080;
 }
 .remove-arrow::-webkit-inner-spin-button,
 .remove-arrow::-webkit-outer-spin-button {
@@ -29,4 +34,22 @@
 
 .remove-arrow {
   -moz-appearance: textfield;
+}
+
+.yourExpenseHistoryContainer::-webkit-scrollbar {
+  display: none;
+}
+.react-datepicker {
+  background-color: #333 !important;
+  color: #fff !important;
+}
+
+.react-datepicker__day,
+.react-datepicker__day-name,
+.react-datepicker__current-month {
+  color: #fff !important;
+}
+
+.react-datepicker__header {
+  background-color: #808080 !important;
 }
