@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Legend, Tooltip);
+
 function ExpenseChart({ expenses }) {
   const groupedData = expenses.reduce((acc, curr) => {
     if (curr.type === "expense") {
@@ -11,6 +12,7 @@ function ExpenseChart({ expenses }) {
     }
     return acc;
   }, {});
+
   const data = {
     labels: Object.keys(groupedData),
     datasets: [
@@ -30,10 +32,26 @@ function ExpenseChart({ expenses }) {
       },
     ],
   };
+
+  const options = {
+    cutout: "65%",
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          font: {
+            size: 12,
+          },
+          boxWidth: 15,
+        },
+      },
+    },
+  };
+
   return (
-    <div className="w-80 flex flex-col text-center">
-      <Doughnut data={data} />
-      <span>Expense will render above</span>
+    <div className="w-90 flex flex-col text-center">
+      <Doughnut data={data} options={options} />
+      <span>Expense chart will render above</span>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
   const [username, setUsername] = useState("shubhang");
   const [isModelOpen, setModelOpen] = useState(false);
-  // const [balance, setBalance] = useState(20000);
+
   const [balanceDate, setBalanceDate] = useState();
   const [balanceInput, setBalanceInput] = useState();
   const [balanceAmount, setBalanceAmount] = useState();
@@ -26,15 +26,14 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
     setBalanceDate("");
     setBalanceInput("");
     setBalanceAmount("");
-
     setModelOpen(false);
   }
 
   return (
     <>
-      <div className="px-5 py-8 flex text-xl w-full">
-        <h1 class="text-4xl w-2/5 items-center p-5">
-          Welcome to <br /> safefund, {username}!!
+      <div className="px-5 pt-12 pb-2 flex text-xl w-full">
+        <h1 class="text-4xl w-2/5 items-center p-5 font-semibold">
+          Welcome to <br /> safefund, {username}!
         </h1>
         <div className="border p-5 w-4/5">
           <div className="flex w-full">
@@ -43,12 +42,12 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
               <img className="h-8" src="/settings.svg" alt="settings-icons" />
             </div>
           </div>
-          <div className="flex gap-5">
-            <button className="border px-4 py-2 clr-sapphire text-white">
+          <div className="flex gap-6">
+            <button className="border px-6 py-3 clr-sapphire text-white rounded-3xl border-white">
               Opening Balance : {balance}
             </button>
             <button
-              className="flex gap-5 text-center border items-center px-4 py-2"
+              className="flex gap-5 text-center border items-center px-6 py-3 rounded-3xl "
               onClick={() => setModelOpen(true)}
             >
               Add Balance

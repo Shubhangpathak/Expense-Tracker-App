@@ -17,12 +17,15 @@ const App = () => {
         setBalance={setBalance}
         setExpenses={setExpenses}
       />
-      <div className="flex w-full gap-5 px-5 items-stretch">
-        <div className="w-1/3 h-full">
+      <div className="flex w-full h-[65vh] gap-2 px-5">
+        <div className="w-1/3">
           <ExpenseHistory expenses={expenses} />
         </div>
 
-        <div className="flex w-2/3 border h-full">
+        <div
+          className="flex w-2/3 border h-full gap-8 justify-center items-center
+"
+        >
           <AddExpense setBalance={setBalance} setExpenses={setExpenses} />
           <ExpenseChart expenses={expenses} />
         </div>

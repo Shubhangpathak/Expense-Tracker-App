@@ -38,12 +38,12 @@ const AddExpense = ({ setBalance, setExpenses }) => {
 
   return (
     <>
-      <div className="flex flex-col w-full p-5  gap-5">
+      <div className="flex flex-col gap-5 w-sm">
         <h3>AddExpense</h3>
         <span className="flex flex-col">
-          <span>Amount</span>
+          <span className="text-gray-400">Amount</span>
           <input
-            className="border px-4 py-2"
+            className="border px-6 py-3 remove-arrow rounded-3xl w-full"
             type="number"
             id="expense"
             value={expenseAmount}
@@ -51,9 +51,9 @@ const AddExpense = ({ setBalance, setExpenses }) => {
           />
         </span>
         <span className="flex flex-col">
-          <span>Category</span>
+          <span className="text-gray-400">Category</span>
           <select
-            className="border px-4 py-3"
+            className="border px-6 py-3 remove-arrow rounded-3xl w-full appearance-none "
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
           >
@@ -68,21 +68,21 @@ const AddExpense = ({ setBalance, setExpenses }) => {
           </select>
         </span>
         <span className="flex flex-col">
-          <span>Date</span>
+          <span className="text-gray-400">Date</span>
           <input
             type="date"
-            className="border px-4 py-2"
+            className="border px-6 py-3 remove-arrow rounded-3xl w-full"
             value={expenseDate}
             onChange={(e) => setExpenseDate(e.target.value)}
           />
         </span>
 
         <div className="flex gap-5">
-          <button className="border px-4 py-2">
+          <button className="border px-6 py-3 remove-arrow rounded-3xl clr-ruby">
             <img src="/reset1.svg" alt="resets-value" className="h-7" />
           </button>
           <button
-            className="clr-emerald border px-8 py-2"
+            className="clr-emerald border px-8 py-4 rounded-3xl"
             onClick={handleAddExpense}
           >
             Add Expense
