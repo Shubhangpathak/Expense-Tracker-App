@@ -4,7 +4,7 @@
   font-family: "Inter", sans-serif;
   font-size: calc(2 / 1.5);
   background-color: #070a13;
-  color: #808080;
+  color: #9b9a9a;
 }
 :root {
   /* --clr-sapphire: #000;
@@ -24,7 +24,7 @@
   /* background-color: #eb4444; */
   color: #fff;
   fill: #fff;
-  border-color: #808080;
+  border-color: #9b9a9a;
 }
 .remove-arrow::-webkit-inner-spin-button,
 .remove-arrow::-webkit-outer-spin-button {
@@ -41,15 +41,15 @@
 }
 .react-datepicker {
   background-color: #333 !important;
-  color: #fff !important;
+  color: #9b9a9a !important;
 }
 
 .react-datepicker__day,
 .react-datepicker__day-name,
 .react-datepicker__current-month {
-  color: #fff !important;
+  color: #9b9a9a !important;
 }
 
 .react-datepicker__header {
-  background-color: #808080 !important;
+  background-color: #9b9a9a !important;
 }

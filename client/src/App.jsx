@@ -17,7 +17,7 @@ const App = () => {
         setBalance={setBalance}
         setExpenses={setExpenses}
       />
-      <div className="flex w-full h-[65vh] gap-2 px-5">
+      <div className="flex flex-col sm:flex-row w-full h-[65vh] gap-2 px-5 ">
         <div className="w-1/3">
           <ExpenseHistory expenses={expenses} />
         </div>

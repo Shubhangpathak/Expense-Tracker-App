@@ -32,7 +32,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
   return (
     <>
       <div className="px-5 pt-12 pb-2 flex text-xl w-full">
-        <h1 class="text-4xl w-2/5 items-center p-5 font-semibold">
+        <h1 className="text-4xl w-2/5 items-center p-5 font-semibold">
           Welcome to <br /> safefund, {username}!
         </h1>
         <div className="border p-5 w-4/5">
