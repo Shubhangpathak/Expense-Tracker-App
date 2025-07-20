@@ -3,8 +3,9 @@ const { default: mongoose } = require('mongoose');
 const dotenv = require('dotenv');
 const { UserModel } = require("./db");
 const bcrypt = require('bcrypt');
-const z = require("zod")
-var jwt = require('jsonwebtoken');
+const z = require('zod')
+const jwt = require('jsonwebtoken');
+const cors = require('cors')
 
 const saltRounds = Number(process.env.SALT_ROUNDS);
 
@@ -17,6 +18,11 @@ const secretKey = process.env.TOKEN_SECRET;
 mongoose.connect(process.env.MONGO_URL)
     .then(() => { return console.log('mongoDB Connected') })
     .catch((err) => console.log('MondoDB error:', err))
+
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}))
 
 app.post('/signup', async function (req, res) {
     try {
@@ -82,7 +88,6 @@ app.post('/signin', async function (req, res) {
         console.error(err);
         res.status(500).json({ "error": "server issue please try again later" });
     }
-
 
 });
 

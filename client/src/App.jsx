@@ -4,12 +4,15 @@ import ManageAccounts from "./components/ManageAccounts";
 import AddExpense from "./components/AddExpense";
 import ExpenseHistory from "./components/ExpenseHistory";
 import ExpenseChart from "./components/ExpenseChart";
+import { Routes, Route } from "react-router-dom";
 
-const App = () => {
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+
+const Home = () => {
   const [balance, setBalance] = useState(20000);
   const [expenses, setExpenses] = useState([]);
-  //i was thinking to bring balance and expense to store in same array because
-  //dont wanna change anything at balance if i do have to change much code and i have to make more
+
   return (
     <>
       <ManageAccounts
@@ -22,14 +25,23 @@ const App = () => {
           <ExpenseHistory expenses={expenses} />
         </div>
 
-        <div
-          className="flex w-2/3 border h-full gap-8 justify-center items-center
-"
-        >
+        <div className="flex w-2/3 border h-full gap-8 justify-center items-center">
           <AddExpense setBalance={setBalance} setExpenses={setExpenses} />
           <ExpenseChart expenses={expenses} />
         </div>
       </div>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
     </>
   );
 };
