@@ -53,3 +53,6 @@
 .react-datepicker__header {
   background-color: #9b9a9a !important;
 }
+.text-clr-sapphire {
+  color: var(--clr-sapphire);
+}

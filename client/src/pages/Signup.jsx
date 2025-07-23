@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import FormInput from "../components/FormInput";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const [alertType, setAlertType] = useState("");
+
+  console.log("username:", username, "password:", password);
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -14,56 +17,71 @@ function Signup() {
         username,
         password,
       });
-      if (res.data.success) {
-        setAlertMsg(res.data.success);
-        setAlertType("success");
-      } else if (res.data.error) {
-        setAlertMsg(res.data.error);
-        setAlertType("error");
-      }
+      console.log("username:", username, "password:", password);
+
+      setAlertMsg(res.data.message || "signup sucess");
+      setAlertType(res.data.status === "success" ? "success" : "error");
     } catch (err) {
-      setAlertMsg("Signup error", err);
+      console.log("Signup error:", err);
+
+      if (err.response && err.response.data) {
+        const data = err.response.data;
+        console.log("error data:", data);
+      } else {
+        setAlertMsg("Network or server error. Try again later");
+      }
       setAlertType("error");
     }
   };
 
   return (
     <>
-      {alertMsg && (
-        <div
-          style={{
-            color: alertType === "success" ? "green" : "red",
-            marginBottom: 10,
-          }}
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+        <h3 className="text-3xl">
+          Welcome to <span className="text-clr-sapphire">safefund</span>
+        </h3>
+        <p>Create account to proceed</p>
+
+        <form
+          onSubmit={handleSignup}
+          className="flex flex-col p-6 border border-gray-300 rounded-md shadow-lg bg-white h-100 justify-center gap-2 items-center"
         >
-          {alertMsg}
-        </div>
-      )}
-      <form onSubmit={handleSignup} className="flex flex-col gap-2 p-4">
-        <label>
-          Username:
-          <input
+          {alertMsg && (
+            <div
+              className="flex w-full justify-center"
+              style={{
+                color: alertType === "success" ? "green" : "red",
+                marginBottom: 10,
+              }}
+            >
+              {alertMsg}
+            </div>
+          )}
+          {/* <span>Username</span> */}
+          <FormInput
             type="text"
-            className="border"
+            placeholder="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-        </label>
 
-        <label>
-          Password:
-          <input
+          {/* <span>Password:</span> */}
+          <FormInput
             type="password"
-            className="border"
+            placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </label>
+          <button
+            type="submit"
+            className="border clr-emerald mt-2 px-28 py-3 rounded-3xl cursor-pointer"
+          >
+            Sign Up
+          </button>
 
-        <button type="submit" className="border">
-          Sign Up
-        </button>
-      </form>
+          <a href="/signin">Login here</a>
+        </form>
+      </div>
     </>
   );
 }

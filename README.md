@@ -10,6 +10,6 @@ Hey there! This is my little project to build a super Simple Expense Tracker. Th
 
 **Here's a sneak peek of the design:** ✨
 
-<img src="public/expense-tracker.webp" alt="Expense Tracker UI Design" width="600"/>
+<img src="client/public/expense-tracker.webp" alt="Expense Tracker UI Design" width="600"/>
 
 Check out the full design file on Figma here: [https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/shubhang?node-id=0-1&t=rCbRT7x3STi2QFOR-1](https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/shubhang?node-id=0-1&t=rCbRT7x3STi2QFOR-1)
