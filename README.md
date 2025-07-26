@@ -1,15 +1,36 @@
-## Expense Tracker with Authentication
+# Expense Tracker App 🧾
 
-Hey there! This is my little project to build a super Simple Expense Tracker. The goal is to help me (and maybe you!) keep tabs on where all the money goes. It's still a work in progress, but here's what's cooking! 🚀
+A simple full-stack expense tracker to help manage personal finances.  
+Built with the MERN stack and includes authentication + basic CRUD features.
 
-- User authentication (Firebase or Express+JWT)
-- Frontend: React with Tailwind
-- Backend: Node.js Express with MongoDB
-- CRUD operations
-- At last: Graphs for expense categories
+---
 
-**Here's a sneak peek of the design:** ✨
+## 🔧 Features
 
-<img src="client/public/expense-tracker.webp" alt="Expense Tracker UI Design" width="600"/>
+- User authentication (JWT + bcrypt)
+- Add and view expenses
+- Track remaining balance
+- Expense history log
+- Frontend: React + Tailwind CSS
+- Backend: Node.js + Express
+- Database: MongoDB (Atlas)
+- Graphs for expense categories (coming soon)
 
-Check out the full design file on Figma here: [https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/shubhang?node-id=0-1&t=rCbRT7x3STi2QFOR-1](https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/shubhang?node-id=0-1&t=rCbRT7x3STi2QFOR-1)
+---
+
+## 📷 Preview
+
+<img src="client/public/expense-tracker.webp" alt="Expense Tracker UI" width="600"/>
+
+Figma Design: [Click here](https://www.figma.com/design/JXM6HpxK7wvFylKCqBlD5O/shubhang?node-id=0-1&t=rCbRT7x3STi2QFOR-1)
+
+---
+
+## 🚀 Getting Started
+
+```bash
+git clone https://github.com/Shubhangpathak/Expense-Tracker-App.git
+cd Expense-Tracker-App
+npm install
+npm run dev
+```
