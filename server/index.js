@@ -1,7 +1,7 @@
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const dotenv = require('dotenv');
-const { UserModel } = require("./db");
+const { UserModel, ExpenseModel, BalanceModel } = require("./db");
 const bcrypt = require('bcrypt');
 const z = require('zod')
 const jwt = require('jsonwebtoken');
@@ -23,6 +23,30 @@ app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
 }))
+
+//new addition 
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    console.log("sturcture that i wanteed to see: \n", authHeader)
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (!token) {
+        return res.status(400).json({
+            status: "error",
+            message: "Acccess token required, login again"
+        })
+    }
+    jwt.verify(token, secretKey, (err, user) => {
+        if (err) {
+            return res.status(403).json({
+                status: "error",
+                message: "Invalid or expired token"
+            });
+        }
+        req.ownerId = user.id; // Storing ownerId for later use
+        next();
+    })
+}
 
 app.post('/signup', async function (req, res) {
     try {
@@ -95,11 +119,17 @@ app.post('/signin', async function (req, res) {
 
         const user = await UserModel.findOne({ username: username })
         if (!user) {
-            return res.status(400).json({ status: "error", error: "username doesnot exist" });
+            return res.status(400).json({
+                status: "error",
+                message: "username doesnot exist"
+            });
         }
         const matchPassword = await bcrypt.compare(password, user.password);
         if (!matchPassword) {
-            return res.status(401).json({ status: "error", message: "incorrect password" });
+            return res.status(401).json({
+                status: "error",
+                message: "incorrect password"
+            });
         } else if (matchPassword) {
             const token = jwt.sign({ id: user._id }, secretKey)
             console.log(token)
@@ -114,6 +144,86 @@ app.post('/signin', async function (req, res) {
     }
 
 });
+
+//adding new rotes
+app.get("/balance", authenticateToken, async function (req, res) {
+    try {
+        let userBalance = await BalanceModel.findOne({ ownerId: req.ownerId });
+        if (!userBalance) {
+            userBalance = await BalanceModel.create({ ownerId: req.ownerId, currentBalance: 0 });
+        }
+
+        res.status(200).json({
+            status: "success",
+            balance: userBalance.currentBalance
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+})
+
+app.post("/expense", authenticateToken, async (req, res) => {
+
+    try {
+        const { amount, category, type, date, description } = req.body;
+
+        if (!amount || !category || !type) {
+            return res.status(400).json({
+                status: "error",
+                message: "Amount, category, and type are required"
+            });
+        }
+
+        const expense = await ExpenseModel.create({
+            ownerId: req.ownerId,
+            amount: Math.abs(Number(amount)),
+            category,
+            type,
+            date: date || new Date(),
+            description: description || ''
+        })
+
+        // Update user balance
+        let userBalance = await BalanceModel.findOne({ ownerId: req.ownerId });
+        if (!userBalance) {
+            userBalance = await BalanceModel.create({
+                ownerId: req.ownerId,
+                currentBalance: 0
+            });
+        }
+        //adjust balance acc to type
+        const balanceChange = type === 'expense' ? -Math.abs(amount) : Math.abs(amount);
+        userBalance.currentBalance += balanceChange;
+
+        await userBalance.save();
+        res.status(201).json({
+            status: "success",
+            message: "Expense added successfully",
+            expense,
+            newBalance: userBalance.currentBalance
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+})
+
+//list expense router
+app.get("/expenses", authenticateToken, async (req, res) => {
+    try {
+        const expenses = await ExpenseModel.find({ ownerId: req.ownerId })
+            .sort({ date: -1 }); // Most recent first
+
+        res.status(200).json({
+            status: "success",
+            expenses
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+})
 
 const port = process.env.PORT || 5000;
 

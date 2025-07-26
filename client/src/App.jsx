@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import ManageAccounts from "./components/ManageAccounts";
 import AddExpense from "./components/AddExpense";
@@ -10,8 +11,55 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 
 const Home = () => {
-  const [balance, setBalance] = useState(20000);
+  const [balance, setBalance] = useState(0);
   const [expenses, setExpenses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getAuthHeader = () => {
+    const token = localStorage.getItem("token");
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "/signin";
+          return;
+        }
+
+        // to update balance even after refresh
+        const balanceRes = await axios.get("http://localhost:5000/balance", {
+          headers: getAuthHeader(),
+        });
+        setBalance(balanceRes.data.balance);
+
+        // for expenses/balance logs
+        const expensesRes = await axios.get("http://localhost:5000/expenses", {
+          headers: getAuthHeader(),
+        });
+        setExpenses(expensesRes.data.expenses);
+      } catch (err) {
+        console.error("Error loading user data:", err);
+        if (err.response?.status === 401 || err.response?.status === 403) {
+          localStorage.removeItem("token");
+          window.location.href = "/signin";
+        }
+      }
+      setLoading(false);
+    };
+
+    loadUserData();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center align-center h-screen w-screen">
+        Loading your details... 💰
+      </div>
+    );
+  }
 
   return (
     <>

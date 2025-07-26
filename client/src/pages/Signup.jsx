@@ -12,6 +12,7 @@ function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post("http://localhost:5000/signup", {
         username,
@@ -27,6 +28,7 @@ function Signup() {
       if (err.response && err.response.data) {
         const data = err.response.data;
         console.log("error data:", data);
+        setAlertMsg(data.message || "Signup failed");
       } else {
         setAlertMsg("Network or server error. Try again later");
       }

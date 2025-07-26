@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 
 function Signin(type, placeholder, value, onChange) {
@@ -7,6 +8,7 @@ function Signin(type, placeholder, value, onChange) {
   const [password, setPassword] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const [alertType, setAlertType] = useState("");
+  const navigate = useNavigate();
 
   console.log("username:", username, "password:", password);
 
@@ -18,15 +20,20 @@ function Signin(type, placeholder, value, onChange) {
         password,
       });
       console.log("username:", username, "password:", password);
-
-      setAlertMsg(res.data.message || "signin sucess");
-      setAlertType(res.data.status === "success" ? "success" : "error");
+      const token = res.data["login success"];
+      if (token) {
+        localStorage.setItem("token", token);
+        setAlertMsg(res.data.message || "login sucess");
+        setAlertType(res.data.status === "success" ? "success" : "error");
+        navigate("/");
+      }
     } catch (err) {
       console.log("Signin error:", err);
 
       if (err.response && err.response.data) {
         const data = err.response.data;
         console.log("error data:", data);
+        setAlertMsg(data.message || "Signup failed");
       } else {
         setAlertMsg("Network or server error. Try again later");
       }

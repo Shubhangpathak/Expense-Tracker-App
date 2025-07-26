@@ -17,7 +17,13 @@ const ExpenseHistory = ({ expenses }) => {
         <div className="yourExpenseHistoryContainer max-h-64 overflow-y-auto gap-2">
           {expenses.map((item, index) => (
             <div className="grid grid-cols-3 gap-5 px-4 py-4 border rounded-3xl text-center mt-1">
-              <span id="date-logs">{item.date}</span>
+              {/* <span id="date-logs">{item.date}</span> */}
+              <span id="date-logs">
+                {item.date
+                  ? new Date(item.date).toLocaleDateString("en-IN")
+                  : ""}
+              </span>
+
               <span id="categories-logs">{item.category}</span>
               <span id="balance-logs">{item.amount}</span>
             </div>
