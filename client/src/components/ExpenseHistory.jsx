@@ -23,7 +23,6 @@ const ExpenseHistory = ({ expenses }) => {
                   ? new Date(item.date).toLocaleDateString("en-IN")
                   : ""}
               </span>
-
               <span id="categories-logs">{item.category}</span>
               <span id="balance-logs">{item.amount}</span>
             </div>

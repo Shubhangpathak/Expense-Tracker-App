@@ -5,6 +5,7 @@ import ManageAccounts from "./components/ManageAccounts";
 import AddExpense from "./components/AddExpense";
 import ExpenseHistory from "./components/ExpenseHistory";
 import ExpenseChart from "./components/ExpenseChart";
+import ExpenseList from "./components/ExpenseList";
 import { Routes, Route } from "react-router-dom";
 
 import Signup from "./pages/Signup";
@@ -78,6 +79,7 @@ const Home = () => {
           <ExpenseChart expenses={expenses} />
         </div>
       </div>
+      <ExpenseList expenses={expenses} />
     </>
   );
 };

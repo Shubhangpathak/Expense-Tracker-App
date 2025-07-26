@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import { jwtDecode } from "jwt-decode"; // Add this import
+
 // import "react-datepicker/dist/react-datepicker.css";
 
 const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
@@ -24,10 +26,14 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          setUsername("shubh"); //temp later gonna decpt and then fetch user from db
+          const decodedToken = jwtDecode(token);
+          console.log("Decoded token:", decodedToken);
+          setUsername(decodedToken.username);
         }
       } catch (err) {
         console.error("Error loading user data:", err);
+        localStorage.removeItem("token");
+        window.location.href = "/signin";
       }
     };
     loadUserData();

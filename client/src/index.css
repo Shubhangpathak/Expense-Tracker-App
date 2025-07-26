@@ -11,11 +11,17 @@
   --clr-emerald: #000; */
   --clr-sapphire: #4a62ee;
   --clr-emerald: #43e56e;
+  --clr-ruby: #931621;
 }
 .clr-sapphire {
   background-color: var(--clr-sapphire);
   color: #fff;
 }
+.clr-ruby {
+  background-color: var(--clr-ruby);
+  color: #fff;
+}
+
 .clr-emerald {
   background-color: var(--clr-emerald);
   color: #fff;

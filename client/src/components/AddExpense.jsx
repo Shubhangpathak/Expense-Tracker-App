@@ -1,37 +1,71 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
 
 const AddExpense = ({ setBalance, setExpenses }) => {
   const [expenseAmount, setExpenseAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("None");
-  const [expenseDate, setExpenseDate] = useState("01/08/2025");
+  const [expenseDate, setExpenseDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
 
-  const handleAddExpense = () => {
-    setBalance((prevBalance) => prevBalance - Number(expenseAmount));
-    setExpenses((prevExpenses) => [
-      ...prevExpenses,
-      {
-        type: "expense",
-        date: expenseDate,
-        category: selectedCategory,
-        amount: -Number(expenseAmount),
-      },
-    ]);
-    setExpenseAmount("");
-    setSelectedCategory("None");
-    setExpenseDate("01/08/2025");
+  const getAuthHeader = () => {
+    const token = localStorage.getItem("token");
+    return token ? { Authorization: `Bearer ${token}` } : {};
   };
+
+  const handleAddExpense = async () => {
+    if (!expenseAmount || selectedCategory === "None") {
+      alert("Please fill all fields!");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/expense",
+        {
+          amount: expenseAmount,
+          category: selectedCategory,
+          type: "expense",
+          date: expenseDate,
+        },
+        { headers: getAuthHeader() }
+      );
+
+      setBalance(response.data.newBalance);
+
+      fetchExpenses();
+
+      handleReset();
+    } catch (err) {
+      console.error("Add expense error:", err);
+      alert("Failed to add expense. Please try again.");
+    }
+    setLoading(false);
+  };
+
+  const fetchExpenses = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/expenses", {
+        headers: getAuthHeader(),
+      });
+      setExpenses(response.data.expenses);
+    } catch (err) {
+      console.error("Fetch expenses error:", err);
+    }
+  };
+
   const handleReset = () => {
     setExpenseAmount("");
     setSelectedCategory("None");
-    setExpenseDate("01/08/2025");
+    setExpenseDate(new Date());
   };
 
   const categories = [
-    "Housing / Rent",
+    "Housing Rent",
     "Utilities",
-    "Food & Groceries",
+    "Groceries & Food",
     "Transportation",
     "Shopping",
     "Health & Medical",
@@ -97,10 +131,11 @@ const AddExpense = ({ setBalance, setExpenses }) => {
             Reset
           </button>
           <button
-            className="clr-emerald  px-8 py-4 rounded-3xl"
+            className="clr-emerald px-8 py-4 rounded-3xl"
             onClick={handleAddExpense}
+            disabled={loading}
           >
-            Add Expense
+            {loading ? "Adding..." : "Add Expense"}
           </button>
         </div>
       </div>
