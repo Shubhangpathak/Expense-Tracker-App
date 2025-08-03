@@ -8,6 +8,8 @@ import ExpenseChart from "./components/ExpenseChart";
 import ExpenseList from "./components/ExpenseList";
 import { Routes, Route } from "react-router-dom";
 
+import { Toaster } from "react-hot-toast";
+
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 
@@ -19,6 +21,24 @@ const Home = () => {
   const getAuthHeader = () => {
     const token = localStorage.getItem("token");
     return token ? { Authorization: `Bearer ${token}` } : {};
+  };
+
+  const refreshData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const balanceRes = await axios.get("http://localhost:5000/balance", {
+        headers: getAuthHeader(),
+      });
+      setBalance(balanceRes.data.balance);
+
+      const expensesRes = await axios.get("http://localhost:5000/expenses", {
+        headers: getAuthHeader(),
+      });
+      setExpenses(expensesRes.data.expenses);
+    } catch (error) {
+      console.error("failed to refresh data", error);
+    }
   };
 
   useEffect(() => {
@@ -64,6 +84,9 @@ const Home = () => {
 
   return (
     <>
+      {/* Removed fixed div that might cause overlay */}
+      {/* <div className="fixed top-0 left-0 w-full pointer-events-none"></div> */}
+
       <ManageAccounts
         balance={balance}
         setBalance={setBalance}
@@ -79,7 +102,7 @@ const Home = () => {
           <ExpenseChart expenses={expenses} />
         </div>
       </div>
-      <ExpenseList expenses={expenses} />
+      <ExpenseList expenses={expenses} refreshData={refreshData} />
     </>
   );
 };
@@ -92,6 +115,38 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
       </Routes>
+
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        gutter={8}
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: "#070a13",
+            color: "#9b9a9a",
+            border: "1px solid #4a62ee",
+            borderRadius: "12px",
+            padding: "16px",
+            fontSize: "14px",
+            fontWeight: "500",
+          },
+          success: {
+            style: {
+              background: "#070a13",
+              color: "#43e56e",
+              border: "1px solid #43e56e",
+            },
+          },
+          error: {
+            style: {
+              background: "#070a13",
+              color: "#931621",
+              border: "1px solid #931621",
+            },
+          },
+        }}
+      />
     </>
   );
 };

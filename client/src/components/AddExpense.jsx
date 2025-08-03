@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const AddExpense = ({ setBalance, setExpenses }) => {
   const [expenseAmount, setExpenseAmount] = useState("");
@@ -16,7 +17,7 @@ const AddExpense = ({ setBalance, setExpenses }) => {
 
   const handleAddExpense = async () => {
     if (!expenseAmount || selectedCategory === "None") {
-      alert("Please fill all fields!");
+      toast.error("Please fill all fields!");
       return;
     }
 
@@ -38,9 +39,10 @@ const AddExpense = ({ setBalance, setExpenses }) => {
       fetchExpenses();
 
       handleReset();
+      toast.success("Expense added successfully!");
     } catch (err) {
       console.error("Add expense error:", err);
-      alert("Failed to add expense. Please try again.");
+      toast.error("Failed to add expense. Please try again.");
     }
     setLoading(false);
   };
@@ -95,7 +97,7 @@ const AddExpense = ({ setBalance, setExpenses }) => {
           <span className="flex flex-col">
             <span className="text-gray-400">Category</span>
             <select
-              className="border px-6 py-3 remove-arrow rounded-3xl w-full appearance-none "
+              className="border px-6 py-3 remove-arrow rounded-3xl w-full appearance-none bg-[#1f1f1f] text-white "
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >

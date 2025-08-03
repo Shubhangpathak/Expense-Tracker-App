@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
+import toast from "react-hot-toast";
 
 function Signin(type, placeholder, value, onChange) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [alertMsg, setAlertMsg] = useState("");
-  const [alertType, setAlertType] = useState("");
   const navigate = useNavigate();
 
   console.log("username:", username, "password:", password);
@@ -23,8 +22,7 @@ function Signin(type, placeholder, value, onChange) {
       const token = res.data["login success"];
       if (token) {
         localStorage.setItem("token", token);
-        setAlertMsg(res.data.message || "login sucess");
-        setAlertType(res.data.status === "success" ? "success" : "error");
+        toast.success(res.data.message || "Login successful!");
         navigate("/");
       }
     } catch (err) {
@@ -33,11 +31,10 @@ function Signin(type, placeholder, value, onChange) {
       if (err.response && err.response.data) {
         const data = err.response.data;
         console.log("error data:", data);
-        setAlertMsg(data.message || "Signup failed");
+        toast.error(data.message || "Login failed");
       } else {
-        setAlertMsg("Network or server error. Try again later");
+        toast.error("Network or server error. Try again later");
       }
-      setAlertType("error");
     }
   };
   return (
@@ -52,17 +49,6 @@ function Signin(type, placeholder, value, onChange) {
           onSubmit={handleSignin}
           className="flex flex-col p-6 border border-gray-300 rounded-md shadow-lg bg-white h-100 justify-center gap-2 items-center"
         >
-          {alertMsg && (
-            <div
-              className="flex w-full justify-center"
-              style={{
-                color: alertType === "success" ? "green" : "red",
-                marginBottom: 10,
-              }}
-            >
-              {alertMsg}
-            </div>
-          )}
           {/* <span>Username</span> */}
           <FormInput
             type="text"

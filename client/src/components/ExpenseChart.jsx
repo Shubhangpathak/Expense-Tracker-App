@@ -5,7 +5,7 @@ import axios from "axios";
 
 ChartJS.register(ArcElement, Legend, Tooltip);
 
-function ExpenseChart({ expenses }) {
+function ExpenseChart({ expenses, refreshData }) {
   const [chartExpense, setChartExpense] = useState(expenses || []);
 
   const getAuthHeader = () => {

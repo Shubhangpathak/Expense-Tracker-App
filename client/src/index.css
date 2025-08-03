@@ -3,12 +3,16 @@
 * {
   font-family: "Inter", sans-serif;
   font-size: calc(2 / 1.5);
-  background-color: #070a13;
+  /* background-color: #070a13; */
   color: #9b9a9a;
+  /* position: relative; */
+  /* z-index: 9999; */
+}
+
+body {
+  background-color: #070a13;
 }
 :root {
-  /* --clr-sapphire: #000;
-  --clr-emerald: #000; */
   --clr-sapphire: #4a62ee;
   --clr-emerald: #43e56e;
   --clr-ruby: #931621;

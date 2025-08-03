@@ -1,14 +1,11 @@
-// import { CategoryScale } from "chart.js";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import { jwtDecode } from "jwt-decode"; // Add this import
-
-// import "react-datepicker/dist/react-datepicker.css";
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
 
 const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
-  // const [username, setUsername] = useState("shubhang");
-  const [username, setUsername] = useState(""); //api shit here
+  const [username, setUsername] = useState("");
   const [isModelOpen, setModelOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -41,7 +38,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
 
   const updateBalance = async () => {
     if (!balanceAmount || !balanceInput) {
-      alert("Please fill all fields!");
+      toast.error("Please fill all fields!");
       return;
     }
     setLoading(true);
@@ -50,8 +47,8 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
         "http://localhost:5000/expense",
         {
           amount: balanceAmount,
-          category: balanceInput, // Using input as category
-          type: "income", //checked by backend after new
+          category: balanceInput,
+          type: "income",
           date: balanceDate || new Date(),
         },
         { headers: getAuthHeader() }
@@ -59,13 +56,14 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
       setBalance(response.data.newBalance);
       fetchExpenses();
 
-      setBalanceDate("01/08/2025");
+      setBalanceDate(new Date());
       setBalanceInput("");
       setBalanceAmount("");
       setModelOpen(false);
+      toast.success("Balance updated successfully!");
     } catch (err) {
       console.error("Add balance error:", err);
-      alert("Failed to add balance. Please try again.");
+      toast.error("Failed to add balance. Please try again.");
     }
     setLoading(false);
   };

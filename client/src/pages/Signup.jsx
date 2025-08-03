@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import FormInput from "../components/FormInput";
+import toast from "react-hot-toast";
 
 function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [alertMsg, setAlertMsg] = useState("");
-  const [alertType, setAlertType] = useState("");
 
   console.log("username:", username, "password:", password);
 
@@ -20,19 +19,21 @@ function Signup() {
       });
       console.log("username:", username, "password:", password);
 
-      setAlertMsg(res.data.message || "signup sucess");
-      setAlertType(res.data.status === "success" ? "success" : "error");
+      toast.success(res.data.message || "Signup successful!");
+      // Redirect to signin after successful signup
+      setTimeout(() => {
+        window.location.href = "/signin";
+      }, 1500);
     } catch (err) {
       console.log("Signup error:", err);
 
       if (err.response && err.response.data) {
         const data = err.response.data;
         console.log("error data:", data);
-        setAlertMsg(data.message || "Signup failed");
+        toast.error(data.message || "Signup failed");
       } else {
-        setAlertMsg("Network or server error. Try again later");
+        toast.error("Network or server error. Try again later");
       }
-      setAlertType("error");
     }
   };
 
@@ -48,17 +49,6 @@ function Signup() {
           onSubmit={handleSignup}
           className="flex flex-col p-6 border border-gray-300 rounded-md shadow-lg bg-white h-100 justify-center gap-2 items-center"
         >
-          {alertMsg && (
-            <div
-              className="flex w-full justify-center"
-              style={{
-                color: alertType === "success" ? "green" : "red",
-                marginBottom: 10,
-              }}
-            >
-              {alertMsg}
-            </div>
-          )}
           {/* <span>Username</span> */}
           <FormInput
             type="text"

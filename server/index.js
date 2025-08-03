@@ -225,6 +225,57 @@ app.get("/expenses", authenticateToken, async (req, res) => {
     }
 })
 
+app.delete("/delete", authenticateToken, async (req, res) => {
+    try {
+        const expenseId = req.body.id;
+        if (!expenseId) {
+            return res.status(400).json({
+                status: "error",
+                message: "selected item id required for deletion"
+            })
+        }
+        const expense = await ExpenseModel.findOne({ _id: expenseId, ownerId: req.ownerId });
+        if (!expense) {
+            return res.status(400).json({
+                status: "error",
+                message: "selected expense not found"
+            })
+        }
+
+        //remove expense from table 
+        await ExpenseModel.deleteOne({ _id: expenseId, ownerId: req.ownerId });
+
+        // imported users balance
+        let userBalance = await BalanceModel.findOne({ ownerId: req.ownerId });
+        if (!userBalance) {
+            return res.status(400).json({
+                status: "error",
+                message: "No balance record found"
+            });
+        }
+
+        //removes amount only if expense or balance
+        if (expense.type === 'expense') {
+            userBalance.currentBalance += Math.abs(expense.amount);
+        }
+        else if (expense.type === 'income') {
+            userBalance.currentBalance -= Math.abs(expense.amount)
+        }
+        await userBalance.save();
+
+        return res.status(200).json({
+            status: "success",
+            message: "Expense deleted and balance updated",
+            newBalance: userBalance.currentBalance
+        });
+
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ status: "error", message: "Server error" });
+    }
+
+})
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
