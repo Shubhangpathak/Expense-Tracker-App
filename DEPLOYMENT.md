@@ -2,27 +2,24 @@
 
 ## Frontend Deployment (Vercel)
 
-### 1. Environment Variables
-Create a `.env` file in the `client` directory with:
+### 1. Vercel Configuration
+- **Root Directory**: `client` (set this in Vercel dashboard)
+- **Build Command**: `npm install && npm run build` (automatic with Vite)
+- **Output Directory**: `dist` (automatic with Vite)
+- **Install Command**: `npm install` (automatic)
+
+### 2. Environment Variables
+Set this in Vercel dashboard:
 ```
 VITE_API_BASE_URL=https://your-render-app.onrender.com
-```
-
-### 2. Vercel Configuration
-Create `vercel.json` in the root directory:
-```json
-{
-  "buildCommand": "cd client && npm install && npm run build",
-  "outputDirectory": "client/dist",
-  "installCommand": "cd client && npm install"
-}
 ```
 
 ### 3. Deploy to Vercel
 1. Push your code to GitHub
 2. Connect your repository to Vercel
-3. Set the environment variable `VITE_API_BASE_URL` in Vercel dashboard
-4. Deploy
+3. Set **Root Directory** to `client`
+4. Set the environment variable `VITE_API_BASE_URL` in Vercel dashboard
+5. Deploy
 
 ## Backend Deployment (Render)
 
@@ -64,4 +61,11 @@ app.use(cors({
 2. Get the Render URL
 3. Update `VITE_API_BASE_URL` in Vercel with the Render URL
 4. Deploy frontend (Vercel)
-5. Test all functionality 
+5. Test all functionality
+
+## Troubleshooting
+
+### Vercel 404 Error
+- Make sure **Root Directory** is set to `client` in Vercel dashboard
+- The `vercel.json` file should be in the root of your repository
+- Ensure all environment variables are set correctly 
