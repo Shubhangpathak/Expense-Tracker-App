@@ -4,9 +4,9 @@
 
 ### 1. Vercel Configuration
 - **Root Directory**: `client` (set this in Vercel dashboard)
-- **Build Command**: `npm install && npm run build` (automatic with Vite)
-- **Output Directory**: `dist` (automatic with Vite)
-- **Install Command**: `npm install` (automatic)
+- **Framework**: Vite (auto-detected)
+- **Build Command**: `npm run build` (automatic)
+- **Output Directory**: `dist` (automatic)
 
 ### 2. Environment Variables
 Set this in Vercel dashboard:
@@ -66,6 +66,17 @@ app.use(cors({
 ## Troubleshooting
 
 ### Vercel 404 Error
-- Make sure **Root Directory** is set to `client` in Vercel dashboard
-- The `vercel.json` file should be in the root of your repository
-- Ensure all environment variables are set correctly 
+1. **Check Root Directory**: Make sure it's set to `client` in Vercel dashboard
+2. **Remove vercel.json**: Try deploying without the vercel.json file first
+3. **Check Build Logs**: Look at the build logs in Vercel dashboard for specific errors
+4. **Verify File Structure**: Ensure all files are in the correct locations:
+   - `client/index.html` exists
+   - `client/src/main.jsx` exists
+   - `client/package.json` has correct scripts
+5. **Environment Variables**: Make sure `VITE_API_BASE_URL` is set correctly
+6. **Try Manual Build**: Run `npm run build` locally in the client directory to test
+
+### Common Issues
+- **Node Version**: Make sure you're using Node.js 18+ in Vercel
+- **Dependencies**: All dependencies should be in `package.json`
+- **Build Output**: Check that `dist` folder is created after build 
