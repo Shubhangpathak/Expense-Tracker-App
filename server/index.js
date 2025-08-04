@@ -8,7 +8,7 @@ const z = require('zod')
 const jwt = require('jsonwebtoken');
 const cors = require('cors')
 
-const saltRounds = Number(process.env.SALT_ROUNDS);
+const saltRounds = parseInt(process.env.SALT_ROUNDS);
 
 const app = express()
 app.use(express.json())
@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_URL)
     .catch((err) => console.log('MondoDB error:', err))
 
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
+    origin: process.env.NODE_ENV === 'production'
         ? [process.env.FRONTEND_URL, 'https://your-vercel-app.vercel.app'] // Add your actual Vercel URL
         : ['http://localhost:3000', 'http://localhost:5173'],
     credentials: true
