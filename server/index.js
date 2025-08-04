@@ -1,6 +1,7 @@
 const express = require('express');
 const { default: mongoose } = require('mongoose');
 const dotenv = require('dotenv');
+require('dotenv').config({ path: './.env' });
 const { UserModel, ExpenseModel, BalanceModel } = require("./db");
 const bcrypt = require('bcrypt');
 const z = require('zod')
@@ -12,7 +13,9 @@ const saltRounds = Number(process.env.SALT_ROUNDS);
 const app = express()
 app.use(express.json())
 
-dotenv.config({ path: __dirname + '/../.env' });
+console.log("Current working dir:", process.cwd());
+
+// dotenv.config({ path: __dirname + '/../.env' });
 const secretKey = process.env.TOKEN_SECRET;
 
 mongoose.connect(process.env.MONGO_URL)
@@ -20,7 +23,9 @@ mongoose.connect(process.env.MONGO_URL)
     .catch((err) => console.log('MondoDB error:', err))
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.NODE_ENV === 'production' 
+        ? [process.env.FRONTEND_URL, 'https://your-vercel-app.vercel.app'] // Add your actual Vercel URL
+        : ['http://localhost:3000', 'http://localhost:5173'],
     credentials: true
 }))
 

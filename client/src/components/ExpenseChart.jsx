@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import axios from "axios";
+import BASE_URL from "../utiles/api";
 
 ChartJS.register(ArcElement, Legend, Tooltip);
 
@@ -16,7 +17,7 @@ function ExpenseChart({ expenses, refreshData }) {
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        const expensesRes = await axios.get("http://localhost:5000/expenses", {
+        const expensesRes = await axios.get(`${BASE_URL}/expenses`, {
           headers: getAuthHeader(),
         });
         console.log("Expenses from MongoDB:", expensesRes.data.expenses);

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import BASE_URL from "../utiles/api";
 
 function ExpenseList({ expenses, refreshData }) {
   // Alternative implementation if you need different types
   const handleDeleteExpense = async (expenseId) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/delete", {
+      const response = await fetch(`${BASE_URL}/delete`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

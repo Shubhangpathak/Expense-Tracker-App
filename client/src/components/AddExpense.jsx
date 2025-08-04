@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import toast from "react-hot-toast";
+import BASE_URL from "../utiles/api";
 
 const AddExpense = ({ setBalance, setExpenses }) => {
   const [expenseAmount, setExpenseAmount] = useState("");
@@ -24,7 +25,7 @@ const AddExpense = ({ setBalance, setExpenses }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/expense",
+        `${BASE_URL}/expenses`,
         {
           amount: expenseAmount,
           category: selectedCategory,
@@ -33,6 +34,16 @@ const AddExpense = ({ setBalance, setExpenses }) => {
         },
         { headers: getAuthHeader() }
       );
+      // const response = await axios.post(
+      //   "http://localhost:5000/expense",
+      //   {
+      //     amount: expenseAmount,
+      //     category: selectedCategory,
+      //     type: "expense",
+      //     date: expenseDate,
+      //   },
+      //   { headers: getAuthHeader() }
+      // );
 
       setBalance(response.data.newBalance);
 
@@ -49,7 +60,7 @@ const AddExpense = ({ setBalance, setExpenses }) => {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/expenses", {
+      const response = await axios.get(`${BASE_URL}/expenses`, {
         headers: getAuthHeader(),
       });
       setExpenses(response.data.expenses);

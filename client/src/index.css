@@ -51,13 +51,13 @@ body {
 }
 .react-datepicker {
   background-color: #333 !important;
-  color: #9b9a9a !important;
+  color: #ffffff !important;
 }
 
 .react-datepicker__day,
 .react-datepicker__day-name,
 .react-datepicker__current-month {
-  color: #9b9a9a !important;
+  color: #fffdfd !important;
 }
 
 .react-datepicker__header {

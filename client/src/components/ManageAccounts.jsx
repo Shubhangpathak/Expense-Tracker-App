@@ -3,6 +3,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import { jwtDecode } from "jwt-decode";
 import toast from "react-hot-toast";
+import BASE_URL from "../utiles/api";
 
 const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
   const [username, setUsername] = useState("");
@@ -44,7 +45,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/expense",
+        `${BASE_URL}/expense`,
         {
           amount: balanceAmount,
           category: balanceInput,
