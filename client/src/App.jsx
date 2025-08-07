@@ -12,6 +12,7 @@ import { Toaster } from "react-hot-toast";
 
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
+import BASE_URL from "./utiles/api";
 
 const Home = () => {
   const [balance, setBalance] = useState(0);
@@ -27,12 +28,12 @@ const Home = () => {
     try {
       const token = localStorage.getItem("token");
 
-      const balanceRes = await axios.get("http://localhost:5000/balance", {
+      const balanceRes = await axios.get(`${BASE_URL}/balance`, {
         headers: getAuthHeader(),
       });
       setBalance(balanceRes.data.balance);
 
-      const expensesRes = await axios.get("http://localhost:5000/expenses", {
+      const expensesRes = await axios.get(`${BASE_URL}/expenses`, {
         headers: getAuthHeader(),
       });
       setExpenses(expensesRes.data.expenses);
@@ -51,13 +52,13 @@ const Home = () => {
         }
 
         // to update balance even after refresh
-        const balanceRes = await axios.get("http://localhost:5000/balance", {
+        const balanceRes = await axios.get(`${BASE_URL}/balance`, {
           headers: getAuthHeader(),
         });
         setBalance(balanceRes.data.balance);
 
         // for expenses/balance logs
-        const expensesRes = await axios.get("http://localhost:5000/expenses", {
+        const expensesRes = await axios.get(`${BASE_URL}/expenses`, {
           headers: getAuthHeader(),
         });
         setExpenses(expensesRes.data.expenses);

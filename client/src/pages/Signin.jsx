@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import toast from "react-hot-toast";
+import BASE_URL from "../utiles/api";
 
 function Signin(type, placeholder, value, onChange) {
   const [username, setUsername] = useState("");
@@ -14,7 +15,7 @@ function Signin(type, placeholder, value, onChange) {
   const handleSignin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/signin", {
+      const res = await axios.post(`${BASE_URL}/signin`, {
         username,
         password,
       });
