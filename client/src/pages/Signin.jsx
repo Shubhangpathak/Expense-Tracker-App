@@ -44,7 +44,7 @@ function Signin(type, placeholder, value, onChange) {
         <h3 className="text-3xl">
           Welcome to <span className="text-clr-sapphire">safefund</span>
         </h3>
-        <p>Login to proceed</p>
+        <p>Proceed to login</p>
 
         <form
           onSubmit={handleSignin}

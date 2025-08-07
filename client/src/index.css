@@ -2,7 +2,7 @@
 @import "tailwindcss";
 * {
   font-family: "Inter", sans-serif;
-  font-size: calc(2 / 1.5);
+  font-size: 16px; /* Fixed base font size */
   /* background-color: #070a13; */
   color: #9b9a9a;
   /* position: relative; */
