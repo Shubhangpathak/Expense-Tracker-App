@@ -25,7 +25,7 @@ const AddExpense = ({ setBalance, setExpenses }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${BASE_URL}/expenses`,
+        `${BASE_URL}/expense`,
         {
           amount: expenseAmount,
           category: selectedCategory,

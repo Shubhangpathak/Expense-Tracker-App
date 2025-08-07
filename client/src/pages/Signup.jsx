@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import FormInput from "../components/FormInput";
 import toast from "react-hot-toast";
+import BASE_URL from "../utiles/api";
 
 function Signup() {
   const [username, setUsername] = useState("");
@@ -13,7 +14,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/signup", {
+      const res = await axios.post(`${BASE_URL}/signup`, {
         username,
         password,
       });

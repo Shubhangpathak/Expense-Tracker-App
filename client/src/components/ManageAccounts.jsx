@@ -71,7 +71,7 @@ const ManageAccounts = ({ balance, setBalance, setExpenses }) => {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/expenses", {
+      const response = await axios.get(`${BASE_URL}/expenses`, {
         headers: getAuthHeader(),
       });
       setExpenses(response.data.expenses);
