@@ -40,7 +40,7 @@ function Signin(type, placeholder, value, onChange) {
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="flex flex-col items-center justify-center min-h-screen w-full bg-gray-100 px-4">
         <h3 className="text-3xl">
           Welcome to <span className="text-clr-sapphire">safefund</span>
         </h3>
@@ -48,7 +48,7 @@ function Signin(type, placeholder, value, onChange) {
 
         <form
           onSubmit={handleSignin}
-          className="flex flex-col p-6 border border-gray-300 rounded-md shadow-lg bg-white h-100 justify-center gap-2 items-center"
+          className="flex flex-col w-full max-w-sm min-w-[300px] p-6 border border-gray-300 rounded-md shadow-lg bg-white justify-center gap-4 items-center"
         >
           {/* <span>Username</span> */}
           <FormInput
